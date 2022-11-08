@@ -22,40 +22,40 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              TextFormField(
-                controller: textCtrl,
-                decoration: const InputDecoration(
-                  border: UnderlineInputBorder(),
-                  suffixIcon: Icon(Icons.arrow_forward),
-                  hintText: 'What\'s on your mind?',
-                  hintStyle: TextStyle(color: Colors.amber),
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                //TODO: autofocus on that text field
+                TextFormField(
+                  controller: textCtrl,
+                  decoration: const InputDecoration(
+                    border: UnderlineInputBorder(),
+                    suffixIcon: Icon(Icons.arrow_forward),
+                    hintText: 'What\'s on your mind?',
+                    hintStyle: TextStyle(color: Colors.grey),
+                  ),
+                  onFieldSubmitted: (value) {
+                    if (value.isNotEmpty) {
+                      entries.add(value);
+                      textCtrl.clear();
+                      setState(() {});
+                    }
+                  },
                 ),
-                onFieldSubmitted: (value) {
-                  if (value.isNotEmpty) {
-                    entries.add(value);
-                    textCtrl.clear();
-                    setState(() {});
-                  }
-                },
-              ),
-              Expanded(
-                child: ListView.builder(
-                    itemCount: entries.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Container(
-                        height: 50,
-                        color: Colors.amber,
-                        child: Center(
-                            child: Text(entries[entries.length - 1 - index])),
-                      );
-                    }),
-              )
-            ],
-          ),
-        ),
+                const SizedBox(height: 8.0),
+                Expanded(
+                  child: ListView.builder(
+                      itemCount: entries.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Card(
+                          child: ListTile(
+                            title: Text(entries[entries.length - 1 - index]),
+                          ),
+                        );
+                      }),
+                )
+              ],
+            )),
       ),
     );
   }
