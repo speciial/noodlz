@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:noodlz/home_page.dart';
+import 'package:noodlz/inbox_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,7 +25,57 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const HomePage(title: 'Get Things DONE'),
+      home: const MyHomePage(title: 'Get Things DONE'),
     );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key, required this.title});
+
+  final String title;
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  int _selectedIndex = 0;
+
+  final List<Widget> _pages = <Widget>[
+    InboxPage(),
+    const Icon(Icons.abc),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.inbox),
+            label: 'Inbox',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.auto_awesome_motion),
+            label: 'Categories',
+          ),
+        ],
+        onTap: _onItemTapped,
+        currentIndex: _selectedIndex,
+      ),
+      body: Center(
+        child: _pages.elementAt(_selectedIndex),
+      ),
+    );
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 }
